@@ -158,4 +158,9 @@ data class Bounds(
     val y: Float = 0f,
     val width: Float = 1f,
     val height: Float = 1f,
-)
+) {
+    /** Right edge = x + width. */
+    val right: Float get() = x + width
+    /** Bottom edge = y + height. */
+    val bottom: Float get() = y + height
+}
