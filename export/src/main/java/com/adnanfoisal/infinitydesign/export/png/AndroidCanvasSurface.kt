@@ -209,13 +209,13 @@ class AndroidCanvasSurface(
             BlendMode.OVERLAY -> PorterDuff.Mode.OVERLAY
             BlendMode.DARKEN -> PorterDuff.Mode.DARKEN
             BlendMode.LIGHTEN -> PorterDuff.Mode.LIGHTEN
-            BlendMode.COLOR_DODGE -> PorterDuff.Mode.DODGE
+            BlendMode.COLOR_DODGE -> PorterDuff.Mode.SCREEN
             BlendMode.COLOR_BURN -> PorterDuff.Mode.DARKEN
             BlendMode.HARD_LIGHT -> PorterDuff.Mode.SRC_OVER
             BlendMode.SOFT_LIGHT -> PorterDuff.Mode.SRC_OVER
-            BlendMode.DIFFERENCE -> PorterDuff.Mode.DIFFERENCE
+            BlendMode.DIFFERENCE -> PorterDuff.Mode.MULTIPLY
             BlendMode.EXCLUSION -> PorterDuff.Mode.SRC_OVER
-            BlendMode.ADDITIVE -> PorterDuff.Mode.PLUS
+            BlendMode.ADDITIVE -> PorterDuff.Mode.ADD
         }
         paint.xfermode = PorterDuffXfermode(xfer)
     }

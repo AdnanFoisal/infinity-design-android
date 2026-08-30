@@ -44,6 +44,9 @@ inline fun <T> okResult(value: T): AppResult<T> = AppResult.Ok(value)
 inline fun errResult(kind: AppError.Kind, message: String, cause: Throwable? = null): AppResult<Nothing> =
     AppResult.Err(AppError(kind, message, cause))
 
+/** Convenience overload so callers can propagate an existing [AppError] verbatim. */
+inline fun errResult(error: AppError): AppResult<Nothing> = AppResult.Err(error)
+
 data class AppError(
     val kind: Kind,
     val message: String,

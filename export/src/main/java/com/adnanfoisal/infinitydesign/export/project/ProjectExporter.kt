@@ -11,6 +11,7 @@ import com.adnanfoisal.infinitydesign.design.validation.DesignDocumentMigrator
 import com.adnanfoisal.infinitydesign.design.validation.DesignValidator
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.add
@@ -59,7 +60,7 @@ class ProjectExporter {
         }
         val docEl = parsed["document"]
             ?: return errResult(AppError.Kind.SchemaValidation, "Missing document")
-        val docJson = json.encodeToString(JsonObject.serializer(), docEl)
+        val docJson = json.encodeToString(JsonElement.serializer(), docEl)
         val rawDoc = DesignDocumentCodec.decode(docJson)
         val doc: DesignDocument = when (rawDoc) {
             is AppResult.Ok -> rawDoc.value

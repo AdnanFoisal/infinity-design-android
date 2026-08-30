@@ -11,6 +11,7 @@ import com.adnanfoisal.infinitydesign.design.dsl.CanvasSpec
 import com.adnanfoisal.infinitydesign.design.dsl.DesignDocument
 import com.adnanfoisal.infinitydesign.design.dsl.DesignElement
 import com.adnanfoisal.infinitydesign.design.dsl.FillSpec
+import com.adnanfoisal.infinitydesign.design.dsl.ShapeKind
 import com.adnanfoisal.infinitydesign.design.dsl.StrokeSpec
 import com.adnanfoisal.infinitydesign.design.dsl.TextAlignment
 import com.adnanfoisal.infinitydesign.design.validation.DesignValidator
@@ -123,29 +124,29 @@ class SvgExporter {
         val fillStr = fillString(el.fill)
         val strokeStr = strokeString(el.stroke)
         when (el.kind) {
-            DesignElement.Shape.ShapeKind.RECTANGLE, DesignElement.Shape.ShapeKind.ROUNDED_RECTANGLE ->
+            ShapeKind.RECTANGLE, ShapeKind.ROUNDED_RECTANGLE ->
                 sb.append("<rect x=\"${b.x}\" y=\"${b.y}\" width=\"${b.width}\" height=\"${b.height}\" ")
-                    .append("rx=\"${if (el.kind == DesignElement.Shape.ShapeKind.ROUNDED_RECTANGLE) el.cornerRadius else 0f}\" ry=\"${el.cornerRadius}\" ")
+                    .append("rx=\"${if (el.kind == ShapeKind.ROUNDED_RECTANGLE) el.cornerRadius else 0f}\" ry=\"${el.cornerRadius}\" ")
                     .append(fillStr).append(strokeStr).append(" opacity=\"${el.opacity}\"/>\n")
-            DesignElement.Shape.ShapeKind.ELLIPSE -> {
+            ShapeKind.ELLIPSE -> {
                 val cx = b.x + b.width / 2f
                 val cy = b.y + b.height / 2f
                 sb.append("<ellipse cx=\"$cx\" cy=\"$cy\" rx=\"${b.width / 2f}\" ry=\"${b.height / 2f}\" ")
                     .append(fillStr).append(strokeStr).append(" opacity=\"${el.opacity}\"/>\n")
             }
-            DesignElement.Shape.ShapeKind.TRIANGLE -> {
+            ShapeKind.TRIANGLE -> {
                 val p1 = "${b.x + b.width / 2f},${b.y}"
                 val p2 = "${b.x},${b.y + b.height}"
                 val p3 = "${b.x + b.width},${b.y + b.height}"
                 sb.append("<polygon points=\"$p1 $p2 $p3\" ").append(fillStr).append(strokeStr).append(" opacity=\"${el.opacity}\"/>\n")
             }
-            DesignElement.Shape.ShapeKind.LINE -> {
+            ShapeKind.LINE -> {
                 sb.append("<line x1=\"${b.x}\" y1=\"${b.y + b.height / 2f}\" ")
                     .append("x2=\"${b.x + b.width}\" y2=\"${b.y + b.height / 2f}\" ")
-                    .append(strokeString(el.stroke) ?: "stroke=\"#000\"").append(" opacity=\"${el.opacity}\"/>\n")
+                    .append(strokeString(el.stroke).ifBlank { "stroke=\"#000\" " }).append(" opacity=\"${el.opacity}\"/>\n")
             }
-            DesignElement.Shape.ShapeKind.POLYGON, DesignElement.Shape.ShapeKind.STAR -> {
-                val sides = if (el.kind == DesignElement.Shape.ShapeKind.POLYGON) 6 else 5
+            ShapeKind.POLYGON, ShapeKind.STAR -> {
+                val sides = if (el.kind == ShapeKind.POLYGON) 6 else 5
                 val cx = b.x + b.width / 2f
                 val cy = b.y + b.height / 2f
                 val rx = b.width / 2f
@@ -157,7 +158,7 @@ class SvgExporter {
                 sb.append("<polygon points=\"${pts.joinToString(" ")}\" ")
                     .append(fillStr).append(strokeStr).append(" opacity=\"${el.opacity}\"/>\n")
             }
-            DesignElement.Shape.ShapeKind.CUSTOM_PATH -> {
+            ShapeKind.CUSTOM_PATH -> {
                 sb.append("<rect x=\"${b.x}\" y=\"${b.y}\" width=\"${b.width}\" height=\"${b.height}\" ")
                     .append(fillStr).append(strokeStr).append(" opacity=\"${el.opacity}\"/>\n")
             }
