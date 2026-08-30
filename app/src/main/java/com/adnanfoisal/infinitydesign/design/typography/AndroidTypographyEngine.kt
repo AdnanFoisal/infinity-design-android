@@ -3,6 +3,7 @@ package com.adnanfoisal.infinitydesign.design.typography
 import android.content.Context
 import android.graphics.Paint
 import android.graphics.Typeface
+import android.text.Layout
 import android.text.StaticLayout
 import android.text.TextPaint
 import com.adnanfoisal.infinitydesign.design.dsl.TextAlignment

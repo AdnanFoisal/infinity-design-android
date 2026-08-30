@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.adnanfoisal.infinitydesign.screens.home
 
 import androidx.compose.foundation.background
